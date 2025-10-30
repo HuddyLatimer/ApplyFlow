@@ -31,7 +31,17 @@ chrome.runtime.onInstalled.addListener(() => {
     contexts: ['page'],
     documentUrlPatterns: [
       'https://www.linkedin.com/jobs/*',
-      'https://www.indeed.com/*'
+      'https://www.indeed.com/*',
+      'https://www.indeed.ca/*',
+      'https://wellfound.com/*',
+      'https://angel.co/*',
+      'https://*.builtin.com/*',
+      'https://www.ziprecruiter.com/*',
+      'https://www.workopolis.com/*',
+      'https://www.jobbank.gc.ca/*',
+      'https://www.dice.com/*',
+      'https://www.glassdoor.com/*',
+      'https://www.glassdoor.ca/*'
     ]
   });
 });

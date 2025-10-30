@@ -1,15 +1,15 @@
 # ApplyFlow - Job Application Tracker
 
-A powerful Chrome extension that helps job seekers organize and track their job applications from LinkedIn and Indeed in one convenient place.
+A powerful Chrome extension that helps job seekers organize and track their job applications from LinkedIn, Indeed, Glassdoor, Dice, Wellfound, Built In, ZipRecruiter, and more in one convenient place.
 
-![ApplyFlow](https://img.shields.io/badge/version-1.0.0-blue)
+![ApplyFlow](https://img.shields.io/badge/version-1.1.0-blue)
 ![Manifest](https://img.shields.io/badge/manifest-v3-green)
 ![React](https://img.shields.io/badge/react-18.2.0-61dafb)
 
 ## Features
 
 ### Core Functionality
-- **One-Click Save**: Save job listings directly from LinkedIn and Indeed job pages
+- **One-Click Save**: Save job listings directly from 9+ major job sites
 - **Application Tracking**: Track the status of each application through 5 stages:
   - 💼 Saved - Job bookmarked for later
   - ✅ Applied - Application submitted
@@ -163,9 +163,24 @@ Then reload the extension in `chrome://extensions/`.
 
 ## Supported Job Sites
 
-Currently supports:
-- **LinkedIn Jobs** (`linkedin.com/jobs/*`)
-- **Indeed** (`indeed.com/viewjob*`, `indeed.com/rc/clk*`)
+ApplyFlow now supports **9 major job platforms**:
+
+### 🇺🇸 United States & International
+- **LinkedIn Jobs** - `linkedin.com/jobs/*`
+- **Indeed** - `indeed.com/viewjob*`
+- **Glassdoor** - `glassdoor.com/job-listing/*`
+- **Dice** - `dice.com/jobs/detail/*` (Tech-focused)
+- **Wellfound** (formerly AngelList) - `wellfound.com/jobs/*` (Startups)
+- **Built In** - `builtin.com/job/*` (Tech hubs: NYC, Austin, Boston, etc.)
+- **ZipRecruiter** - `ziprecruiter.com/c/*/*`
+
+### 🇨🇦 Canada
+- **Indeed Canada** - `indeed.ca/viewjob*`
+- **Glassdoor Canada** - `glassdoor.ca/job-listing/*`
+- **Workopolis** - `workopolis.com/jobsearch/job/*`
+- **Canada Job Bank** - `jobbank.gc.ca/jobsearch/jobposting/*` (Government)
+
+The extension automatically detects which site you're on and extracts the relevant job information.
 
 ## Features Breakdown
 
@@ -231,7 +246,7 @@ MIT License - feel free to use and modify for your own projects.
 
 ## Credits
 
-Built with love for job seekers everywhere. Good luck with your applications!
+Built for job seekers everywhere. Good luck with your applications!
 
 ---
 

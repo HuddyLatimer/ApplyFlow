@@ -1,4 +1,4 @@
-// Content script for extracting job data from LinkedIn and Indeed
+// Content script for extracting job data from multiple job sites
 
 interface JobData {
   title: string;
@@ -8,12 +8,10 @@ interface JobData {
 
 function extractLinkedInJobData(): JobData | null {
   try {
-    // LinkedIn job title
     const titleElement = document.querySelector('.job-details-jobs-unified-top-card__job-title') ||
                         document.querySelector('.jobs-unified-top-card__job-title') ||
                         document.querySelector('h1.t-24');
 
-    // LinkedIn company name
     const companyElement = document.querySelector('.job-details-jobs-unified-top-card__company-name') ||
                           document.querySelector('.jobs-unified-top-card__company-name') ||
                           document.querySelector('.jobs-unified-top-card__subtitle-primary-grouping a') ||
@@ -36,12 +34,10 @@ function extractLinkedInJobData(): JobData | null {
 
 function extractIndeedJobData(): JobData | null {
   try {
-    // Indeed job title
     const titleElement = document.querySelector('.jobsearch-JobInfoHeader-title') ||
                         document.querySelector('h1.jobsearch-JobInfoHeader-title-container') ||
                         document.querySelector('h1[class*="jobsearch-JobInfoHeader"]');
 
-    // Indeed company name
     const companyElement = document.querySelector('[data-company-name="true"]') ||
                           document.querySelector('.jobsearch-InlineCompanyRating-companyHeader') ||
                           document.querySelector('div[data-testid="inlineHeader-companyName"]') ||
@@ -62,13 +58,226 @@ function extractIndeedJobData(): JobData | null {
   }
 }
 
+function extractWellfoundJobData(): JobData | null {
+  try {
+    // Wellfound (formerly AngelList Talent)
+    const titleElement = document.querySelector('h1[class*="heading"]') ||
+                        document.querySelector('h1.mb-2') ||
+                        document.querySelector('[data-test="JobTitle"]') ||
+                        document.querySelector('h1');
+
+    const companyElement = document.querySelector('[data-test="StartupLink"]') ||
+                          document.querySelector('a[href*="/company/"]') ||
+                          document.querySelector('.company-name') ||
+                          document.querySelector('h2 a');
+
+    const title = titleElement?.textContent?.trim() || '';
+    const company = companyElement?.textContent?.trim() || '';
+    const url = window.location.href;
+
+    if (title && company) {
+      return { title, company, url };
+    }
+
+    return null;
+  } catch (error) {
+    console.error('Error extracting Wellfound job data:', error);
+    return null;
+  }
+}
+
+function extractBuiltInJobData(): JobData | null {
+  try {
+    // Built In
+    const titleElement = document.querySelector('h1[data-id="job-title"]') ||
+                        document.querySelector('.job-title') ||
+                        document.querySelector('h1.font-barlow') ||
+                        document.querySelector('h1');
+
+    const companyElement = document.querySelector('[data-id="company-title"]') ||
+                          document.querySelector('.company-title') ||
+                          document.querySelector('a[href*="/company/"]') ||
+                          document.querySelector('.job-company-name');
+
+    const title = titleElement?.textContent?.trim() || '';
+    const company = companyElement?.textContent?.trim() || '';
+    const url = window.location.href;
+
+    if (title && company) {
+      return { title, company, url };
+    }
+
+    return null;
+  } catch (error) {
+    console.error('Error extracting Built In job data:', error);
+    return null;
+  }
+}
+
+function extractZipRecruiterJobData(): JobData | null {
+  try {
+    // ZipRecruiter
+    const titleElement = document.querySelector('h1[class*="JobTitle"]') ||
+                        document.querySelector('h1.job_title') ||
+                        document.querySelector('[data-testid="jobTitle"]') ||
+                        document.querySelector('h1');
+
+    const companyElement = document.querySelector('a[class*="CompanyName"]') ||
+                          document.querySelector('[data-testid="companyName"]') ||
+                          document.querySelector('.job_company_name') ||
+                          document.querySelector('a[href*="/company/"]');
+
+    const title = titleElement?.textContent?.trim() || '';
+    const company = companyElement?.textContent?.trim() || '';
+    const url = window.location.href;
+
+    if (title && company) {
+      return { title, company, url };
+    }
+
+    return null;
+  } catch (error) {
+    console.error('Error extracting ZipRecruiter job data:', error);
+    return null;
+  }
+}
+
+function extractWorkopolisJobData(): JobData | null {
+  try {
+    // Workopolis
+    const titleElement = document.querySelector('h1.job-title') ||
+                        document.querySelector('[itemprop="title"]') ||
+                        document.querySelector('.job-header h1') ||
+                        document.querySelector('h1');
+
+    const companyElement = document.querySelector('[itemprop="hiringOrganization"]') ||
+                          document.querySelector('.job-company') ||
+                          document.querySelector('.company-name') ||
+                          document.querySelector('a[href*="/company/"]');
+
+    const title = titleElement?.textContent?.trim() || '';
+    const company = companyElement?.textContent?.trim() || '';
+    const url = window.location.href;
+
+    if (title && company) {
+      return { title, company, url };
+    }
+
+    return null;
+  } catch (error) {
+    console.error('Error extracting Workopolis job data:', error);
+    return null;
+  }
+}
+
+function extractJobBankJobData(): JobData | null {
+  try {
+    // Canada Job Bank (jobbank.gc.ca)
+    const titleElement = document.querySelector('h1[property="title"]') ||
+                        document.querySelector('.job-posting-detail-title') ||
+                        document.querySelector('span[property="title"]') ||
+                        document.querySelector('h1');
+
+    const companyElement = document.querySelector('span[property="name"]') ||
+                          document.querySelector('.job-posting-detail-organization') ||
+                          document.querySelector('[property="hiringOrganization"]') ||
+                          document.querySelector('.employer-name');
+
+    const title = titleElement?.textContent?.trim() || '';
+    const company = companyElement?.textContent?.trim() || '';
+    const url = window.location.href;
+
+    if (title && company) {
+      return { title, company, url };
+    }
+
+    return null;
+  } catch (error) {
+    console.error('Error extracting Job Bank job data:', error);
+    return null;
+  }
+}
+
+function extractDiceJobData(): JobData | null {
+  try {
+    // Dice
+    const titleElement = document.querySelector('h1[data-cy="jobTitle"]') ||
+                        document.querySelector('.jobTitle') ||
+                        document.querySelector('h1.job-title') ||
+                        document.querySelector('h1');
+
+    const companyElement = document.querySelector('a[data-cy="companyNameLink"]') ||
+                          document.querySelector('.employer') ||
+                          document.querySelector('[data-cy="companyName"]') ||
+                          document.querySelector('.company-name');
+
+    const title = titleElement?.textContent?.trim() || '';
+    const company = companyElement?.textContent?.trim() || '';
+    const url = window.location.href;
+
+    if (title && company) {
+      return { title, company, url };
+    }
+
+    return null;
+  } catch (error) {
+    console.error('Error extracting Dice job data:', error);
+    return null;
+  }
+}
+
+function extractGlassdoorJobData(): JobData | null {
+  try {
+    // Glassdoor
+    const titleElement = document.querySelector('[data-test="job-title"]') ||
+                        document.querySelector('.job-title') ||
+                        document.querySelector('h2[class*="JobDetails"]') ||
+                        document.querySelector('div[class*="JobDetails_jobTitle"]') ||
+                        document.querySelector('h1');
+
+    const companyElement = document.querySelector('[data-test="employer-name"]') ||
+                          document.querySelector('.employer-name') ||
+                          document.querySelector('div[class*="JobDetails_employerName"]') ||
+                          document.querySelector('[data-test="employerName"]');
+
+    const title = titleElement?.textContent?.trim() || '';
+    const company = companyElement?.textContent?.trim() || '';
+    const url = window.location.href;
+
+    if (title && company) {
+      return { title, company, url };
+    }
+
+    return null;
+  } catch (error) {
+    console.error('Error extracting Glassdoor job data:', error);
+    return null;
+  }
+}
+
 function extractJobData(): JobData | null {
   const url = window.location.href;
+  const hostname = window.location.hostname;
 
+  // Route to appropriate extraction function based on URL
   if (url.includes('linkedin.com/jobs')) {
     return extractLinkedInJobData();
   } else if (url.includes('indeed.com')) {
     return extractIndeedJobData();
+  } else if (hostname.includes('wellfound.com') || hostname.includes('angel.co')) {
+    return extractWellfoundJobData();
+  } else if (hostname.includes('builtin.com')) {
+    return extractBuiltInJobData();
+  } else if (hostname.includes('ziprecruiter.com')) {
+    return extractZipRecruiterJobData();
+  } else if (hostname.includes('workopolis.com')) {
+    return extractWorkopolisJobData();
+  } else if (hostname.includes('jobbank.gc.ca')) {
+    return extractJobBankJobData();
+  } else if (hostname.includes('dice.com')) {
+    return extractDiceJobData();
+  } else if (hostname.includes('glassdoor.com') || hostname.includes('glassdoor.ca')) {
+    return extractGlassdoorJobData();
   }
 
   return null;

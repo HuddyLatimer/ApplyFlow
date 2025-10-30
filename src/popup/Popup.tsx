@@ -59,8 +59,25 @@ export const Popup: React.FC = () => {
       }
 
       // Check if we're on a supported site
-      if (!tab.url.includes('linkedin.com/jobs') && !tab.url.includes('indeed.com')) {
-        showNotification('Please navigate to a job posting on LinkedIn or Indeed');
+      const supportedSites = [
+        'linkedin.com/jobs',
+        'indeed.com',
+        'indeed.ca',
+        'wellfound.com',
+        'angel.co',
+        'builtin.com',
+        'ziprecruiter.com',
+        'workopolis.com',
+        'jobbank.gc.ca',
+        'dice.com',
+        'glassdoor.com',
+        'glassdoor.ca'
+      ];
+
+      const isSupported = supportedSites.some(site => tab.url?.includes(site));
+
+      if (!isSupported) {
+        showNotification('Please navigate to a job posting on a supported job site');
         return;
       }
 
